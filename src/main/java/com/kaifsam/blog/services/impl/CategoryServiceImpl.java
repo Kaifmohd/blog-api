@@ -30,7 +30,8 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public CategoryDto updateCategory(CategoryDto categoryDto, Integer categoryId) {
-		Category category = this.categoryRepo.findById(categoryId).orElseThrow(()-> new ResourceNotFoundException("Category"," Category Id",categoryId));
+		Category category = this.categoryRepo.findById(categoryId)
+				.orElseThrow(()-> new ResourceNotFoundException("Category"," Category Id",categoryId));
 		
 		category.setCategoryTitle(categoryDto.getCategoryTitle());
 		category.setCategoryDescription(categoryDto.getCategoryDescription());
@@ -53,7 +54,7 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public List<CategoryDto> getCategories() {
 		List<Category> categories= this.categoryRepo.findAll();
-		List<CategoryDto> catDtos = categories.stream().map(category ->this.modelMapper.map(categories, CategoryDto.class)).collect(Collectors.toList());
+		List<CategoryDto> catDtos = categories.stream().map(category ->this.modelMapper.map(category, CategoryDto.class)).collect(Collectors.toList());
 		return catDtos;
 	}
 
